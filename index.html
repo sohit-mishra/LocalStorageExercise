@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOCAL STORAGE EXERCISE
+    </title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            padding-top: 100px;
+            background-color: #141212;
+        }
+
+        h2{
+            padding: 20px;
+            color: #ffffff;
+        }
+        .container {
+            width: 800px;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: 0 0 8px 3px #b9b8b8;
+            border-radius: 5px;
+            padding: 20px 30px;
+            
+        }
+
+        .left {
+            width: 46%;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 0px;
+            margin-top: 8px;
+        }
+
+        .right {
+            width: 46%;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 0px;
+        }
+
+        label {
+            font-size: 18px;
+            color: rgb(255, 255, 255);
+        }
+
+        input {
+            width: 80%;
+            height: 35px;
+            border-radius: 5px;
+            outline: none;
+            padding: 5px 10px;
+            border: 1px solid rgb(127, 127, 127);
+            margin: 5px 0 10px;
+        }
+
+        button {
+            background: transparent;
+            border: 1px solid rgb(255, 255, 255);
+            color: rgb(255, 255, 255);
+            width: 200px;
+            font-size: 16px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            height: 35px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        table td,
+        table th {
+            border: 1px solid #ffffff;
+            padding: 8px;
+            color: #fff;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        button:hover {
+            background-color: #ddd;
+            color: #141212;
+        }
+
+        table th {
+            text-align: left;
+            background-color: #f3f3f3;
+            color: rgb(94, 94, 94);
+        }
+
+        @media screen and (max-width:950px){
+            body{
+                padding-top: 10px;
+            }
+            .container{
+                flex-direction: column;
+                width: 100%;
+                box-shadow: none;
+            }
+            .left,.right{
+                width: 100%;
+            }
+            .left{
+                margin-top: 30px;
+            }
+            .right{
+                order: -1;
+            }
+            input{
+                width: 100%;
+            }
+            button{
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h2>LOCAL STORAGE</h2>
+    <div class="container">
+        <div class="left">
+            <label for="name">Name</label>
+            <input type="text" id="name" required/>
+            <label for="age">Age</label>
+            <input type="number" id="age" required/>
+            <button id="sumbit">Sumbit</button>
+        </div>
+        <div class="right">
+            <button id="retrieveData">Store Data</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    var sumbit = document.querySelector("#sumbit");
+    var retrieveData = document.querySelector('#retrieveData');
+    var tbody = document.querySelector('tbody');
+    var arr = [];
+
+    sumbit.addEventListener('click', function () {
+        var name = document.querySelector("#name");
+        var age = document.querySelector("#age");
+        if(name.value != '' && age.value != ''){
+            console.log('true');
+           var obj = {};
+            obj.name = name.value;
+            obj.age = age.value;
+            arr.push(obj);
+            localStorage.setItem('data', JSON.stringify(arr)); 
+        }
+        
+    })
+
+    retrieveData.addEventListener('click', function () {
+        tbody.innerHTML = '';
+        var Data = JSON.parse(localStorage.getItem('data'));
+        for (const i of Data) {
+            var object = i;
+            var tableRow = document.createElement('tr');
+            for (const key in object) {
+                var td = document.createElement('td');
+                td.textContent = object[key];
+                tableRow.append(td);
+            }
+            tbody.append(tableRow);
+        }
+    })
+
+
+
+</script>
